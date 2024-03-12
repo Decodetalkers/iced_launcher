@@ -1,10 +1,12 @@
-//use iced::widget::{button, column, row, text, text_input};
-use iced::widget::text_input;
-use iced::{Command, Element, Theme};
+use std::process::exit;
+
+use applications::{all_apps, App};
+use iced::widget::{column, scrollable, text_input};
+use iced::{event, Command, Element, Event, Length, Theme};
+mod applications;
 use iced_layershell::reexport::Anchor;
 use iced_layershell::settings::{LayerShellSettings, Settings};
 use iced_layershell::Application;
-//use iced_runtime::command::Action;
 
 pub fn main() -> Result<(), iced_layershell::Error> {
     Launcher::run(Settings {
@@ -19,12 +21,15 @@ pub fn main() -> Result<(), iced_layershell::Error> {
 
 struct Launcher {
     text: String,
+    apps: Vec<App>,
 }
 
 #[derive(Debug, Clone)]
 enum Message {
     SearchEditChanged(String),
     SearchSubmit,
+    Launch(usize),
+    IcedEvent(Event),
 }
 
 impl Application for Launcher {
@@ -37,6 +42,7 @@ impl Application for Launcher {
         (
             Self {
                 text: "".to_string(),
+                apps: all_apps(),
             },
             Command::none(),
         )
@@ -46,21 +52,44 @@ impl Application for Launcher {
         String::from("iced_launcer")
     }
 
+    fn subscription(&self) -> iced::Subscription<Self::Message> {
+        event::listen().map(Message::IcedEvent)
+    }
+
     fn update(&mut self, message: Message) -> Command<Message> {
         match message {
-            Message::SearchSubmit => {}
+            Message::SearchSubmit => Command::none(),
             Message::SearchEditChanged(edit) => {
                 self.text = edit;
+                Command::none()
+            }
+            Message::Launch(index) => {
+                self.apps[index].launch();
+                std::thread::sleep(std::time::Duration::from_millis(1));
+                exit(0)
+                // FIXME: Command::single(Action::Window(WindowAction::Close(Id::MAIN))),
+                // this will cause coredump
+            }
+            Message::IcedEvent(event) => {
+                println!("{event:?}");
+                Command::none()
             }
         }
-        Command::none()
     }
 
     fn view(&self) -> Element<Message> {
-        text_input("put the launcher name", &self.text)
+        let text_ip: Element<Message> = text_input("put the launcher name", &self.text)
             .padding(10)
             .on_input(Message::SearchEditChanged)
             .on_submit(Message::SearchSubmit)
-            .into()
+            .into();
+        let buttom_vec: Vec<Element<Message>> = self
+            .apps
+            .iter()
+            .enumerate()
+            .map(|(index, app)| app.view(index))
+            .collect();
+        let buttom: Element<Message> = scrollable(column(buttom_vec).width(Length::Fill)).into();
+        column![text_ip, buttom].into()
     }
 }
