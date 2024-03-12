@@ -66,7 +66,7 @@ impl App {
         }
     }
 
-    pub fn view(&self, index: usize) -> Element<Message> {
+    pub fn view(&self, index: usize, selected: bool) -> Element<Message> {
         button(
             row![
                 self.icon(),
@@ -80,7 +80,12 @@ impl App {
         )
         .on_press(Message::Launch(index))
         .width(Length::Fill)
-        .style(theme::Button::Secondary)
+        .height(Length::Fixed(85.))
+        .style(if selected {
+            theme::Button::Primary
+        } else {
+            theme::Button::Secondary
+        })
         .into()
     }
 }

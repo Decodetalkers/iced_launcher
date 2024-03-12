@@ -1287,9 +1287,9 @@ dependencies = [
 
 [[package]]
 name = "iced_layershell"
-version = "0.2.1"
+version = "0.2.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "933013ffce13e6be021505676722ad0c8d18abeb6fb841f52f9baf2c737b7736"
+checksum = "cb7347f89ac56ded42948da6c2215539a1863e18911db2be551196ec80cf7f1a"
 dependencies = [
  "futures",
  "iced",
@@ -2888,6 +2888,7 @@ dependencies = [
  "iced",
  "iced_layershell",
  "iced_runtime",
+ "once_cell",
  "regex",
  "xdg",
 ]
