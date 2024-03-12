@@ -78,6 +78,7 @@ impl Application for Launcher {
     }
 
     fn view(&self) -> Element<Message> {
+        let re = regex::Regex::new(&self.text).ok();
         let text_ip: Element<Message> = text_input("put the launcher name", &self.text)
             .padding(10)
             .on_input(Message::SearchEditChanged)
@@ -87,6 +88,15 @@ impl Application for Launcher {
             .apps
             .iter()
             .enumerate()
+            .filter(|(_, app)| {
+                if re.is_none() {
+                    return true;
+                }
+                let re = re.as_ref().unwrap();
+
+                re.is_match(app.title().to_lowercase().as_str())
+                    || re.is_match(app.description().to_lowercase().as_str())
+            })
             .map(|(index, app)| app.view(index))
             .collect();
         let buttom: Element<Message> = scrollable(column(buttom_vec).width(Length::Fill)).into();

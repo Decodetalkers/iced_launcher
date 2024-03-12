@@ -4,7 +4,7 @@ use std::str::FromStr;
 use gio::{AppLaunchContext, DesktopAppInfo};
 
 use gio::prelude::*;
-use iced::widget::{button, column, row, svg, text};
+use iced::widget::{button, column, image, row, svg, text};
 use iced::{theme, Pixels};
 use iced::{Element, Length};
 
@@ -33,10 +33,29 @@ impl App {
         &self.name
     }
 
-    fn icon(&self) -> svg::Handle {
+    fn icon(&self) -> Element<Message> {
         match &self.icon {
-            Some(path) => svg::Handle::from_path(path),
-            None => svg::Handle::from_memory(DEFAULT_ICON),
+            Some(path) => {
+                if path
+                    .as_os_str()
+                    .to_str()
+                    .is_some_and(|pathname| pathname.ends_with("png"))
+                {
+                    image(image::Handle::from_path(path))
+                        .width(Length::Fixed(80.))
+                        .height(Length::Fixed(80.))
+                        .into()
+                } else {
+                    svg(svg::Handle::from_path(path))
+                        .width(Length::Fixed(80.))
+                        .height(Length::Fixed(80.))
+                        .into()
+                }
+            }
+            None => svg(svg::Handle::from_memory(DEFAULT_ICON))
+                .width(Length::Fixed(80.))
+                .height(Length::Fixed(80.))
+                .into(),
         }
     }
 
@@ -50,9 +69,7 @@ impl App {
     pub fn view(&self, index: usize) -> Element<Message> {
         button(
             row![
-                svg(self.icon())
-                    .width(Length::Fixed(80.))
-                    .height(Length::Fixed(80.)),
+                self.icon(),
                 column![
                     text(self.title()).size(Pixels::from(20)),
                     text(self.description()).size(Pixels::from(10))
