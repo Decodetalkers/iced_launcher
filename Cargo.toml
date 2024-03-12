@@ -1,0 +1,20 @@
+[package]
+name = "ulauncher"
+authors = ["Decodertalkers <aakari@tutanota.com>"]
+edition = "2021"
+version = "0.1.0"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+iced = { version = "0.12", features = [
+	"tokio",
+	"debug",
+	"image",
+	"advanced",
+	"image",
+	"svg",
+] }
+iced_runtime = "0.12"
+iced_layershell = "0.2.0"
