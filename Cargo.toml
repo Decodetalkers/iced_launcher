@@ -17,7 +17,7 @@ iced = { version = "0.12", features = [
 	"svg",
 ] }
 iced_runtime = "0.12"
-iced_layershell = "0.2.0"
+iced_layershell = "0.2.1"
 gio = "0.19.2"
 regex = "1.10.3"
 xdg = "2.5.2"
