@@ -11,8 +11,9 @@ use iced_layershell::Application;
 use once_cell::sync::Lazy;
 
 static SCROLLABLE_ID: Lazy<scrollable::Id> = Lazy::new(scrollable::Id::unique);
+static INPUT_ID: Lazy<text_input::Id> = Lazy::new(text_input::Id::unique);
 
-pub fn main() -> Result<(), iced_layershell::Error> {
+fn main() -> Result<(), iced_layershell::Error> {
     Launcher::run(Settings {
         layer_settings: LayerShellSettings {
             size: Some((1000, 1000)),
@@ -137,7 +138,7 @@ impl Application for Launcher {
                         _ => {}
                     }
                 }
-                Command::none()
+                text_input::focus(INPUT_ID.clone())
             }
         }
     }
@@ -148,6 +149,7 @@ impl Application for Launcher {
             .padding(10)
             .on_input(Message::SearchEditChanged)
             .on_submit(Message::SearchSubmit)
+            .id(INPUT_ID.clone())
             .into();
         let buttom_vec: Vec<Element<Message>> = self
             .apps
