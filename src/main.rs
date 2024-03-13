@@ -52,7 +52,7 @@ impl Application for Launcher {
                 apps: all_apps(),
                 scrollpos: 0,
             },
-            Command::none(),
+            text_input::focus(INPUT_ID.clone()),
         )
     }
 
@@ -118,7 +118,9 @@ impl Application for Launcher {
                         })
                         .count();
                 }
-                if let Event::Keyboard(keyboard::Event::KeyPressed { key, .. }) = event {
+                if let Event::Keyboard(keyboard::Event::KeyReleased { key, .. })
+                | Event::Keyboard(keyboard::Event::KeyPressed { key, .. }) = event
+                {
                     match key {
                         keyboard::Key::Named(Named::ArrowUp) => {
                             if self.scrollpos == 0 {
