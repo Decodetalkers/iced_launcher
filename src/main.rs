@@ -68,11 +68,31 @@ impl Application for Launcher {
         use keyboard::key::Named;
         match message {
             Message::SearchSubmit => {
-                self.apps[self.scrollpos].launch();
-                std::thread::sleep(std::time::Duration::from_millis(1));
-                exit(0)
+                let re = regex::Regex::new(&self.text).ok();
+                let index = self
+                    .apps
+                    .iter()
+                    .enumerate()
+                    .filter(|(_, app)| {
+                        if re.is_none() {
+                            return true;
+                        }
+                        let re = re.as_ref().unwrap();
+
+                        re.is_match(app.title().to_lowercase().as_str())
+                            || re.is_match(app.description().to_lowercase().as_str())
+                    })
+                    .enumerate()
+                    .find(|(index, _)| *index == self.scrollpos);
+                if let Some((_, (_, app))) = index {
+                    app.launch();
+                    std::thread::sleep(std::time::Duration::from_millis(1));
+                    exit(0)
+                }
+                Command::none()
             }
             Message::SearchEditChanged(edit) => {
+                self.scrollpos = 0;
                 self.text = edit;
                 Command::none()
             }
@@ -84,8 +104,20 @@ impl Application for Launcher {
                 // this will cause coredump
             }
             Message::IcedEvent(event) => {
+                let mut len = self.apps.len();
+
+                let re = regex::Regex::new(&self.text).ok();
+                if let Some(re) = re {
+                    len = self
+                        .apps
+                        .iter()
+                        .filter(|app| {
+                            re.is_match(app.title().to_lowercase().as_str())
+                                || re.is_match(app.description().to_lowercase().as_str())
+                        })
+                        .count();
+                }
                 if let Event::Keyboard(keyboard::Event::KeyPressed { key, .. }) = event {
-                    let singal_offset = 1. / self.apps.len() as f32;
                     match key {
                         keyboard::Key::Named(Named::ArrowUp) => {
                             if self.scrollpos == 0 {
@@ -94,7 +126,7 @@ impl Application for Launcher {
                             self.scrollpos -= 1;
                         }
                         keyboard::Key::Named(Named::ArrowDown) => {
-                            if self.scrollpos >= self.apps.len() {
+                            if self.scrollpos >= len - 1 {
                                 return Command::none();
                             }
                             self.scrollpos += 1;
@@ -104,13 +136,6 @@ impl Application for Launcher {
                         }
                         _ => {}
                     }
-                    return scrollable::snap_to(
-                        SCROLLABLE_ID.clone(),
-                        scrollable::RelativeOffset {
-                            x: 0.,
-                            y: singal_offset * self.scrollpos as f32,
-                        },
-                    );
                 }
                 Command::none()
             }
@@ -137,7 +162,9 @@ impl Application for Launcher {
                 re.is_match(app.title().to_lowercase().as_str())
                     || re.is_match(app.description().to_lowercase().as_str())
             })
-            .map(|(index, app)| app.view(index, index == self.scrollpos))
+            .enumerate()
+            .filter(|(index, _)| *index >= self.scrollpos)
+            .map(|(filter_index, (index, app))| app.view(index, filter_index == self.scrollpos))
             .collect();
         let buttom: Element<Message> = scrollable(column(buttom_vec).width(Length::Fill))
             .id(SCROLLABLE_ID.clone())
