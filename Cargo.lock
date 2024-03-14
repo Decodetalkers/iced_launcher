@@ -1287,9 +1287,8 @@ dependencies = [
 
 [[package]]
 name = "iced_layershell"
-version = "0.2.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cb7347f89ac56ded42948da6c2215539a1863e18911db2be551196ec80cf7f1a"
+version = "0.2.3"
+source = "git+https://github.com/waycrate/exwlshelleventloop#a4da0db1f993fff2136cf5a925d2f52946faa8cd"
 dependencies = [
  "futures",
  "iced",
@@ -1559,9 +1558,8 @@ dependencies = [
 
 [[package]]
 name = "layershellev"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "171ba83b7561ecdc5609876662ab13a72b615a1cc315835a79673d1f824e7030"
+version = "0.2.3"
+source = "git+https://github.com/waycrate/exwlshelleventloop#a4da0db1f993fff2136cf5a925d2f52946faa8cd"
 dependencies = [
  "bitflags 2.4.2",
  "calloop",
