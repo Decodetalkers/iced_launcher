@@ -1288,7 +1288,7 @@ dependencies = [
 [[package]]
 name = "iced_layershell"
 version = "0.2.3"
-source = "git+https://github.com/waycrate/exwlshelleventloop#5ce293058f7f6a6f172f18c074625d84075decf2"
+source = "git+https://github.com/waycrate/exwlshelleventloop#8b919fe78e2d271c23060ffa117f6add06442acc"
 dependencies = [
  "futures",
  "iced",
@@ -1559,7 +1559,7 @@ dependencies = [
 [[package]]
 name = "layershellev"
 version = "0.2.3"
-source = "git+https://github.com/waycrate/exwlshelleventloop#5ce293058f7f6a6f172f18c074625d84075decf2"
+source = "git+https://github.com/waycrate/exwlshelleventloop#8b919fe78e2d271c23060ffa117f6add06442acc"
 dependencies = [
  "bitflags 2.4.2",
  "calloop",
