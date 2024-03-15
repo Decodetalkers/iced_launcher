@@ -1,12 +1,13 @@
-use std::process::exit;
-
 use applications::{all_apps, App};
 use iced::widget::{column, scrollable, text_input};
 use iced::{event, Command, Element, Event, Length, Theme};
 mod applications;
+use iced::window::Id;
 use iced_layershell::reexport::{Anchor, KeyboardInteractivity};
 use iced_layershell::settings::{LayerShellSettings, Settings};
 use iced_layershell::Application;
+use iced_runtime::command::Action;
+use iced_runtime::window::Action as WindowAction;
 
 use once_cell::sync::Lazy;
 
@@ -22,7 +23,9 @@ fn main() -> Result<(), iced_layershell::Error> {
             ..Default::default()
         },
         ..Default::default()
-    })
+    })?;
+    std::thread::sleep(std::time::Duration::from_millis(1));
+    Ok(())
 }
 
 struct Launcher {
@@ -87,10 +90,10 @@ impl Application for Launcher {
                     .find(|(index, _)| *index == self.scrollpos);
                 if let Some((_, (_, app))) = index {
                     app.launch();
-                    std::thread::sleep(std::time::Duration::from_millis(1));
-                    exit(0)
+                    Command::single(Action::Window(WindowAction::Close(Id::MAIN)))
+                } else {
+                    Command::none()
                 }
-                Command::none()
             }
             Message::SearchEditChanged(edit) => {
                 self.scrollpos = 0;
@@ -99,10 +102,7 @@ impl Application for Launcher {
             }
             Message::Launch(index) => {
                 self.apps[index].launch();
-                std::thread::sleep(std::time::Duration::from_millis(1));
-                exit(0)
-                // FIXME: Command::single(Action::Window(WindowAction::Close(Id::MAIN))),
-                // this will cause coredump
+                Command::single(Action::Window(WindowAction::Close(Id::MAIN)))
             }
             Message::IcedEvent(event) => {
                 let mut len = self.apps.len();
@@ -135,7 +135,7 @@ impl Application for Launcher {
                             self.scrollpos += 1;
                         }
                         keyboard::Key::Named(Named::Escape) => {
-                            exit(0);
+                            return Command::single(Action::Window(WindowAction::Close(Id::MAIN)));
                         }
                         _ => {}
                     }

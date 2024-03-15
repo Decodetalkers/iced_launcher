@@ -232,9 +232,9 @@ checksum = "7ff69b9dd49fd426c69a0db9fc04dd934cdb6645ff000864d98f7e2af8830eaa"
 
 [[package]]
 name = "bytemuck"
-version = "1.14.3"
+version = "1.15.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a2ef034f05691a48569bd920a96c81b9d91bbad1ab5ac7c4616c1f6ef36cb79f"
+checksum = "5d6d68c57235a3a081186990eca2867354726650f42f7516ca50c28d6281fd15"
 dependencies = [
  "bytemuck_derive",
 ]
@@ -334,9 +334,9 @@ checksum = "77e53693616d3075149f4ead59bdeecd204ac6b8192d8969757601b74bddf00f"
 
 [[package]]
 name = "clipboard-win"
-version = "5.2.0"
+version = "5.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12f9a0700e0127ba15d1d52dd742097f821cd9c65939303a44d970465040a297"
+checksum = "d517d4b86184dbb111d3556a10f1c8a04da7428d2987bf1081602bf11c3aa9ee"
 dependencies = [
  "error-code",
 ]
@@ -1288,7 +1288,7 @@ dependencies = [
 [[package]]
 name = "iced_layershell"
 version = "0.2.3"
-source = "git+https://github.com/waycrate/exwlshelleventloop#a4da0db1f993fff2136cf5a925d2f52946faa8cd"
+source = "git+https://github.com/waycrate/exwlshelleventloop#5ce293058f7f6a6f172f18c074625d84075decf2"
 dependencies = [
  "futures",
  "iced",
@@ -1559,7 +1559,7 @@ dependencies = [
 [[package]]
 name = "layershellev"
 version = "0.2.3"
-source = "git+https://github.com/waycrate/exwlshelleventloop#a4da0db1f993fff2136cf5a925d2f52946faa8cd"
+source = "git+https://github.com/waycrate/exwlshelleventloop#5ce293058f7f6a6f172f18c074625d84075decf2"
 dependencies = [
  "bitflags 2.4.2",
  "calloop",
@@ -2203,9 +2203,9 @@ checksum = "3b42e27ef78c35d3998403c1d26f3efd9e135d3e5121b0a4845cc5cc27547f4f"
 
 [[package]]
 name = "read-fonts"
-version = "0.15.6"
+version = "0.16.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "17ea23eedb4d938031b6d4343222444608727a6aa68ec355e13588d9947ffe92"
+checksum = "81c524658d3b77930a391f559756d91dbe829ab6cf4687083f615d395df99722"
 dependencies = [
  "font-types",
 ]
@@ -2615,9 +2615,9 @@ dependencies = [
 
 [[package]]
 name = "swash"
-version = "0.1.12"
+version = "0.1.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d06ff4664af8923625604261c645f5c4cc610cc83c84bec74b50d76237089de7"
+checksum = "9af636fb90d39858650cae1088a37e2862dab4e874a0bb49d6dfb5b2dacf0e24"
 dependencies = [
  "read-fonts",
  "yazi",
@@ -2657,9 +2657,9 @@ dependencies = [
 
 [[package]]
 name = "system-deps"
-version = "6.2.0"
+version = "6.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2a2d580ff6a20c55dfb86be5f9c238f67835d0e81cbdea8bf5680e0897320331"
+checksum = "e8e9199467bcbc77c6a13cc6e32a6af21721ab8c96aa0261856c4fda5a4433f0"
 dependencies = [
  "cfg-expr",
  "heck",
@@ -2888,6 +2888,7 @@ dependencies = [
  "iced_runtime",
  "once_cell",
  "regex",
+ "tracing",
  "xdg",
 ]
 
@@ -3652,9 +3653,9 @@ checksum = "32b752e52a2da0ddfbdbcc6fceadfeede4c939ed16d13e648833a61dfb611ed8"
 
 [[package]]
 name = "winit"
-version = "0.29.14"
+version = "0.29.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a7a3db69ffbe53a9babec7804da7a90f21020fcce1f2f5e5291e2311245b993d"
+checksum = "0d59ad965a635657faf09c8f062badd885748428933dad8e8bdd64064d92e5ca"
 dependencies = [
  "ahash",
  "android-activity",
