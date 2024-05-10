@@ -1297,8 +1297,9 @@ dependencies = [
 
 [[package]]
 name = "iced_layershell"
-version = "0.2.3"
-source = "git+https://github.com/waycrate/exwlshelleventloop#4a49bd38a75bc8a70a524192ffad62f9333e1cc5"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3bc06dce05864256ab43c8e381e6caf3f7be246c257118e09d8874b8191ae68d"
 dependencies = [
  "futures",
  "iced",
@@ -1568,11 +1569,13 @@ dependencies = [
 
 [[package]]
 name = "layershellev"
-version = "0.2.3"
-source = "git+https://github.com/waycrate/exwlshelleventloop#4a49bd38a75bc8a70a524192ffad62f9333e1cc5"
+version = "0.2.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "316efdb0f33f8865442168e89061031ad1a9c70c147a235077459c325c8d146d"
 dependencies = [
  "bitflags 2.5.0",
  "raw-window-handle",
+ "smithay-client-toolkit",
  "tempfile",
  "thiserror",
  "wayland-backend",
@@ -2512,12 +2515,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "922fd3eeab3bd820d76537ce8f582b1cf951eceb5475c28500c7457d9d17f53a"
 dependencies = [
  "bitflags 2.5.0",
+ "bytemuck",
  "calloop",
  "calloop-wayland-source",
  "cursor-icon",
  "libc",
  "log",
  "memmap2 0.9.4",
+ "pkg-config",
  "rustix",
  "thiserror",
  "wayland-backend",
@@ -2527,6 +2532,7 @@ dependencies = [
  "wayland-protocols",
  "wayland-protocols-wlr",
  "wayland-scanner",
+ "xkbcommon",
  "xkeysym",
 ]
 
@@ -3786,6 +3792,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "213b7324336b53d2414b2db8537e56544d981803139155afa84f76eeebb7a546"
 
 [[package]]
+name = "xkbcommon"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "13867d259930edc7091a6c41b4ce6eee464328c6ff9659b7e4c668ca20d4c91e"
+dependencies = [
+ "libc",
+ "memmap2 0.8.0",
+ "xkeysym",
+]
+
+[[package]]
 name = "xkbcommon-dl"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3803,6 +3820,9 @@ name = "xkeysym"
 version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "054a8e68b76250b253f671d1268cb7f1ae089ec35e195b2efb2a4e9a836d0621"
+dependencies = [
+ "bytemuck",
+]
 
 [[package]]
 name = "xml-rs"
